@@ -15,7 +15,8 @@
       "!**/.turbo",
       "!**/.wrangler",
       "!**/dist",
-      "!**/drizzle"
+      "!**/drizzle",
+      "!**/next-env.d.ts"
     ]
   },
   "formatter": {
