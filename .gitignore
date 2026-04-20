@@ -32,6 +32,9 @@ pnpm-debug.log*
 !.vscode/settings.json
 .idea/
 
+# Claude Code — personal settings
+.claude/settings.local.json
+
 # Test / coverage
 coverage/
 .nyc_output/
