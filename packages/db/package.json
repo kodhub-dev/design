@@ -11,19 +11,23 @@
   },
   "scripts": {
     "db:generate": "drizzle-kit generate",
-    "db:migrate:local": "wrangler d1 migrations apply kodhub-design --local",
-    "db:migrate:remote": "wrangler d1 migrations apply kodhub-design --remote",
+    "db:migrate:local": "wrangler d1 migrations apply kodhub-design --local --config ../../apps/web/wrangler.jsonc",
+    "db:migrate:remote": "wrangler d1 migrations apply kodhub-design --remote --config ../../apps/web/wrangler.jsonc",
     "db:studio": "drizzle-kit studio",
-    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p test/tsconfig.json",
     "clean": "rm -rf .turbo dist"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2"
   },
   "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.14.7",
     "@cloudflare/workers-types": "^4.20260420.1",
     "drizzle-kit": "^0.31.10",
     "typescript": "^6.0.3",
+    "vitest": "^4.1.4",
     "wrangler": "^4.83.0"
   }
 }
