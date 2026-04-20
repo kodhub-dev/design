@@ -1,0 +1,26 @@
+{
+  "name": "@kodhub-design/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo dist",
+    "docker:build": "docker build -t kodhub-design-worker:local .",
+    "docker:run": "docker run --rm -p 8080:8080 --env-file .env kodhub-design-worker:local"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.14",
+    "hono": "^4.12.14",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
