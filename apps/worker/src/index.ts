@@ -1,7 +1,7 @@
-import { timingSafeEqual } from 'node:crypto';
-import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
-import { z } from 'zod';
+import { timingSafeEqual } from "node:crypto";
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
+import { z } from "zod";
 
 const env = z
   .object({
@@ -12,15 +12,15 @@ const env = z
 
 const app = new Hono();
 
-app.get('/healthz', (c) => c.text('ok'));
+app.get("/healthz", (c) => c.text("ok"));
 
-app.use('/jobs/*', async (c, next) => {
-  const token = c.req.header('x-internal-token') ?? '';
+app.use("/jobs/*", async (c, next) => {
+  const token = c.req.header("x-internal-token") ?? "";
   const expected = env.INTERNAL_TOKEN;
   const a = Buffer.from(token);
   const b = Buffer.from(expected);
   if (a.length !== b.length || !timingSafeEqual(a, b)) {
-    return c.text('unauthorized', 401);
+    return c.text("unauthorized", 401);
   }
   await next();
 });
@@ -31,7 +31,7 @@ const transcodeJob = z.object({
   outputKey: z.string(),
 });
 
-app.post('/jobs/transcode', async (c) => {
+app.post("/jobs/transcode", async (c) => {
   const body = transcodeJob.parse(await c.req.json());
   // TODO: download from R2, ffmpeg, upload, callback to /api/internal/jobs/:id/complete
   return c.json({ accepted: true, jobId: body.jobId });

@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, sql, type SQL } from "drizzle-orm";
+import { and, asc, desc, eq, type SQL, sql } from "drizzle-orm";
 import type { SQLiteTable } from "drizzle-orm/sqlite-core";
 import type { Db } from "../client";
 
@@ -33,9 +33,7 @@ export async function find<T extends SQLiteTable>(
   if (w) q = q.where(w);
   if (opts.orderBy) {
     const col = cols[opts.orderBy.field as string];
-    q = q.orderBy(
-      opts.orderBy.dir === "desc" ? desc(col as never) : asc(col as never),
-    );
+    q = q.orderBy(opts.orderBy.dir === "desc" ? desc(col as never) : asc(col as never));
   }
   if (opts.limit !== undefined) q = q.limit(opts.limit);
   if (opts.offset !== undefined) q = q.offset(opts.offset);
@@ -99,10 +97,7 @@ export async function count<T extends SQLiteTable>(
   opts: { where?: Partial<T["$inferSelect"]> } = {},
 ): Promise<number> {
   const cols = table as unknown as Record<string, unknown>;
-  let q = db
-    .select({ n: sql<number>`count(*)` })
-    .from(table)
-    .$dynamic();
+  let q = db.select({ n: sql<number>`count(*)` }).from(table).$dynamic();
   const w = buildWhere(cols, opts.where);
   if (w) q = q.where(w);
   const [row] = await q;

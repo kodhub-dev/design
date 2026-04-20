@@ -69,10 +69,7 @@ describe("Workspace", () => {
       ownerId: "owner_1",
     });
 
-    const updated = await models.Workspace.update(
-      { where: { id: "w_1" } },
-      { name: "New" },
-    );
+    const updated = await models.Workspace.update({ where: { id: "w_1" } }, { name: "New" });
     expect(updated).toHaveLength(1);
     expect(updated[0]?.name).toBe("New");
 

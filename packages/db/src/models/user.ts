@@ -3,9 +3,9 @@ import { type NewUser, type User, users } from "../schema";
 import {
   count,
   create,
+  type FindOptions,
   find,
   findOne,
-  type FindOptions,
   remove,
   update,
   type WhereOnly,
@@ -19,8 +19,7 @@ export function createUserModel(db: Db) {
     findOne: (opts: WhereOnly<User>) => findOne(db, users, opts),
     findById: (id: string) => findOne(db, users, { where: { id } }),
     create: (data: NewUser) => create(db, users, data),
-    update: (opts: WhereOnly<User>, data: Partial<NewUser>) =>
-      update(db, users, opts, data),
+    update: (opts: WhereOnly<User>, data: Partial<NewUser>) => update(db, users, opts, data),
     delete: (opts: WhereOnly<User>) => remove(db, users, opts),
     count: (opts: { where?: Partial<User> } = {}) => count(db, users, opts),
   };

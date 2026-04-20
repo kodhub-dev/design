@@ -83,10 +83,7 @@ describe("User", () => {
     await User.create({ id: "u_1", email: "a@example.com", name: "Alice" });
     await User.create({ id: "u_2", email: "b@example.com", name: "Bob" });
 
-    const updated = await User.update(
-      { where: { id: "u_1" } },
-      { name: "Alicia" },
-    );
+    const updated = await User.update({ where: { id: "u_1" } }, { name: "Alicia" });
     expect(updated).toHaveLength(1);
     expect(updated[0]?.name).toBe("Alicia");
 
@@ -115,9 +112,7 @@ describe("User", () => {
 
   it("refuses to update with an empty where clause", async () => {
     const { User } = createModels(env.DB);
-    await expect(User.update({ where: {} }, { name: "x" })).rejects.toThrow(
-      /where/i,
-    );
+    await expect(User.update({ where: {} }, { name: "x" })).rejects.toThrow(/where/i);
   });
 
   it("count returns total or filtered total", async () => {
@@ -135,8 +130,6 @@ describe("User", () => {
   it("rejects duplicate email (unique constraint)", async () => {
     const { User } = createModels(env.DB);
     await User.create({ id: "u_1", email: "dup@example.com" });
-    await expect(
-      User.create({ id: "u_2", email: "dup@example.com" }),
-    ).rejects.toThrow();
+    await expect(User.create({ id: "u_2", email: "dup@example.com" })).rejects.toThrow();
   });
 });

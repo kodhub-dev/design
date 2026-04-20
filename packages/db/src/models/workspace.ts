@@ -3,9 +3,9 @@ import { type NewWorkspace, type Workspace, workspaces } from "../schema";
 import {
   count,
   create,
+  type FindOptions,
   find,
   findOne,
-  type FindOptions,
   remove,
   update,
   type WhereOnly,
@@ -22,7 +22,6 @@ export function createWorkspaceModel(db: Db) {
     update: (opts: WhereOnly<Workspace>, data: Partial<NewWorkspace>) =>
       update(db, workspaces, opts, data),
     delete: (opts: WhereOnly<Workspace>) => remove(db, workspaces, opts),
-    count: (opts: { where?: Partial<Workspace> } = {}) =>
-      count(db, workspaces, opts),
+    count: (opts: { where?: Partial<Workspace> } = {}) => count(db, workspaces, opts),
   };
 }
